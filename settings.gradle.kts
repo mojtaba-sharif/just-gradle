@@ -11,5 +11,10 @@ rootProject.name = "just-gradle"
 include("simple-projectkt")
 include("simple-projectj")
 include("simple-appj")
-apply(from = "simple-appj/settings.gradle.kts")
+include("simple-appj:app")
+include("multi-appj")
+include("multi-appj:app-service")
+include("multi-appj:library")
+//include("multi-appj:app-service")
+//apply(from = "simple-appj/settings.gradle.kts")
 

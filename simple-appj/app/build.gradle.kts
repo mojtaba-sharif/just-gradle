@@ -6,22 +6,57 @@
  * User Manual available at https://docs.gradle.org/7.1.1/userguide/building_java_projects.html
  */
 
+
+val junitVersion: String by project
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    // Add flywaydb plugin
+    id("org.flywaydb.flyway") version "8.5.5"
 }
+
+// tag::sourceSets[]
+//sourceSets {
+//
+//    main {
+//        java {
+//            setSrcDirs(listOf("src"))
+//        }
+//    }
+//    test {
+//        java {
+//            setSrcDirs(listOf("test/src"))
+//        }
+//    }
+//}
+// end::sourceSets[]
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+//    jcenter()
+//    mavenLocal()
+
 }
+
+
+// tag::repository[]
+//repositories {
+//    flatDir {
+//        dirs("lib")
+//    }
+//}
+// end::repository[]
+
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1-jre")
+
 }
 
 application {
@@ -33,3 +68,34 @@ tasks.test {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.register("myTaskOne") {
+    doFirst {
+        println("Do first my task one is here")
+    }
+
+    doLast {
+        println("Do last my task one is here")
+    }
+}
+
+tasks.register("A") {
+    doFirst {
+        println("Do first A is here")
+    }
+}
+
+tasks.register("B") {
+    dependsOn("A")
+    doFirst {
+        println("Do first B is here")
+    }
+}
+//implementation
+//compileOnly
+//runtimeOnly
+
+
+//testImplementation
+//testCompileOnly
+//testRuntimeOnly
